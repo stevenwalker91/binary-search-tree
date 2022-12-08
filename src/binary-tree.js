@@ -110,6 +110,15 @@ const BinarySearchTree = (array) => {
     }
   };
 
+  const height = (node) => {
+    if (node === null) return 0;
+
+    let left = height(node.left);
+    let right = height(node.right);
+
+    return Math.max(left + 1, right + 1);
+  };
+
   return {
     get root() {
       return root;
@@ -119,6 +128,7 @@ const BinarySearchTree = (array) => {
     insert,
     deleteNode,
     depth,
+    height,
   };
 };
 
@@ -126,9 +136,9 @@ let arr = [6, 6, 5, 4, 3, 2, 1, 6, 15, 22, 13];
 
 const newTree = BinarySearchTree(arr);
 const root = newTree.root;
-const fifteen = newTree.find(22);
 
 newTree.insert(100);
+const fifteen = newTree.find(5);
 
-console.log(newTree.depth(fifteen));
+console.log(newTree.height(fifteen));
 console.log(newTree.prettyPrint(root));

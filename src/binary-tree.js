@@ -35,9 +35,8 @@ const BinarySearchTree = (array) => {
 
   const find = (value, rootNode = root) => {
     // base case(s)
-    if (rootNode.data === undefined) {
-      return null;
-    }
+    if (rootNode.data === undefined) return null;
+
     if (rootNode.data === value) {
       return rootNode;
     }
@@ -52,9 +51,7 @@ const BinarySearchTree = (array) => {
 
   const insert = (value, rootNode = root) => {
     // base case
-    if (rootNode === null) {
-      return (rootNode = node.Node(value));
-    }
+    if (rootNode === null) return (rootNode = node.Node(value));
 
     if (value > rootNode.data) {
       rootNode.right = insert(value, rootNode.right);
@@ -67,13 +64,7 @@ const BinarySearchTree = (array) => {
 
   const deleteNode = (value, rootNode = root) => {
     // base case:
-    if (rootNode === null) {
-      return rootNode;
-    }
-
-    // value found so now check for children and take relevant action
-    if (value === rootNode.data) {
-    }
+    if (rootNode === null) return rootNode;
 
     if (value > rootNode.data) {
       rootNode.right = deleteNode(value, rootNode.right);
@@ -106,6 +97,19 @@ const BinarySearchTree = (array) => {
     return rootNode;
   };
 
+  const depth = (value, rootNode = root, depthCount = 0) => {
+    // base path(s):
+    if (rootNode === null) return depthCount;
+    if (rootNode.data === value) return depthCount;
+
+    // value not found so either go down left or right
+    if (value > rootNode.data) {
+      return depth(value, rootNode.right, depthCount + 1);
+    } else {
+      return depth(value, rootNode.left, depthCount + 1);
+    }
+  };
+
   return {
     get root() {
       return root;
@@ -114,6 +118,8 @@ const BinarySearchTree = (array) => {
     find,
     insert,
     deleteNode,
+    depth,
+    height,
   };
 };
 
@@ -121,11 +127,9 @@ let arr = [6, 6, 5, 4, 3, 2, 1, 6, 15, 22, 13];
 
 const newTree = BinarySearchTree(arr);
 const root = newTree.root;
+const fifteen = newTree.find(15);
 
 newTree.insert(100);
 
-console.log(newTree.prettyPrint(root));
-
-newTree.deleteNode(13);
-
+console.log(newTree.height(fifteen));
 console.log(newTree.prettyPrint(root));

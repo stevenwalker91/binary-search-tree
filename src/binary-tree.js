@@ -65,7 +65,46 @@ const BinarySearchTree = (array) => {
     return rootNode;
   };
 
-  const deleteNode = () => {};
+  const deleteNode = (value, rootNode = root) => {
+    // base case:
+    if (rootNode === null) {
+      return rootNode;
+    }
+
+    // value found so now check for children and take relevant action
+    if (value === rootNode.data) {
+    }
+
+    if (value > rootNode.data) {
+      rootNode.right = deleteNode(value, rootNode.right);
+    } else if (value < rootNode.data) {
+      rootNode.left = deleteNode(value, rootNode.left);
+    } else {
+      // no children so can just delete
+      if (rootNode.left === null && rootNode.right === null) {
+        return null;
+      }
+
+      // only has right child
+      if (rootNode.left === null && rootNode.right !== null) {
+        return rootNode.right;
+      }
+
+      // only has left child
+      if (rootNode.left !== null && rootNode.right === null) {
+        return rootNode.left;
+      }
+
+      // has both children
+      if (rootNode.left !== null && rootNode.right !== null) {
+        // set rootNode.data to the smallest number on the right
+        rootNode.data = utils.minValue(rootNode.right);
+        rootNode.right = deleteNode(rootNode.data, rootNode.right);
+      }
+    }
+
+    return rootNode;
+  };
 
   return {
     get root() {
@@ -83,8 +122,10 @@ let arr = [6, 6, 5, 4, 3, 2, 1, 6, 15, 22, 13];
 const newTree = BinarySearchTree(arr);
 const root = newTree.root;
 
-console.log(newTree.insert(10));
-console.log(newTree.insert(11));
-console.log(newTree.insert(12));
+newTree.insert(100);
+
+console.log(newTree.prettyPrint(root));
+
+newTree.deleteNode(13);
 
 console.log(newTree.prettyPrint(root));

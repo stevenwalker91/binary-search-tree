@@ -97,16 +97,16 @@ const BinarySearchTree = (array) => {
     return rootNode;
   };
 
-  const depth = (value, rootNode = root, depthCount = 0) => {
+  const depth = (node, rootNode = root, depthCount = 0) => {
     // base path(s):
     if (rootNode === null) return depthCount;
-    if (rootNode.data === value) return depthCount;
+    if (rootNode.data === node.data) return depthCount;
 
     // value not found so either go down left or right
-    if (value > rootNode.data) {
-      return depth(value, rootNode.right, depthCount + 1);
+    if (node.data > rootNode.data) {
+      return depth(node, rootNode.right, depthCount + 1);
     } else {
-      return depth(value, rootNode.left, depthCount + 1);
+      return depth(node, rootNode.left, depthCount + 1);
     }
   };
 
@@ -119,7 +119,6 @@ const BinarySearchTree = (array) => {
     insert,
     deleteNode,
     depth,
-    height,
   };
 };
 
@@ -127,9 +126,9 @@ let arr = [6, 6, 5, 4, 3, 2, 1, 6, 15, 22, 13];
 
 const newTree = BinarySearchTree(arr);
 const root = newTree.root;
-const fifteen = newTree.find(15);
+const fifteen = newTree.find(22);
 
 newTree.insert(100);
 
-console.log(newTree.height(fifteen));
+console.log(newTree.depth(fifteen));
 console.log(newTree.prettyPrint(root));

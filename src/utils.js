@@ -15,4 +15,9 @@ const minValue = (root) => {
   return value;
 };
 
-export { removeArrayDuplicates, minValue };
+const createArray = (node, array) => {
+  array.push(node);
+  return array;
+};
+
+export { removeArrayDuplicates, minValue, createArray };

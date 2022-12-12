@@ -123,6 +123,11 @@ const BinarySearchTree = (array) => {
     const queue = [root];
     const output = [];
 
+    // while the queue has stuff in it:
+    // 1. get the first item from the queue and call the callback (if provided)
+    // 1a. Add the node to an output array which will be returned if there is no callback
+    // 2. check for nodes on the left and add them to the queue
+    // 3. check for nodes on the right and add them to the queue
     while (queue.length > 0) {
       let node = queue.shift();
 
@@ -138,6 +143,54 @@ const BinarySearchTree = (array) => {
     }
   };
 
+  const inOrder = (callbackFunction, node = root, returnArray = []) => {
+    //base case
+    if (node === null) {
+      return;
+    }
+
+    if (node.left) inOrder(callbackFunction, node.left, returnArray);
+    if (callbackFunction) callbackFunction(node);
+    returnArray = utils.createArray(node, returnArray);
+    if (node.right) inOrder(callbackFunction, node.right, returnArray);
+
+    if (returnArray.length > 0) {
+      return returnArray;
+    }
+  };
+
+  const preOrder = (callbackFunction, node = root, returnArray = []) => {
+    //base case
+    if (node === null) {
+      return;
+    }
+
+    if (callbackFunction) callbackFunction(node);
+    returnArray = utils.createArray(node, returnArray);
+    if (node.left) preOrder(callbackFunction, node.left, returnArray);
+    if (node.right) preOrder(callbackFunction, node.right, returnArray);
+
+    if (returnArray.length > 0) {
+      return returnArray;
+    }
+  };
+
+  const postOrder = (callbackFunction, node = root, returnArray = []) => {
+    //base case
+    if (node === null) {
+      return;
+    }
+
+    if (node.left) postOrder(callbackFunction, node.left, returnArray);
+    if (node.right) postOrder(callbackFunction, node.right, returnArray);
+    if (callbackFunction) callbackFunction(node);
+    returnArray = utils.createArray(node, returnArray);
+
+    if (returnArray.length > 0) {
+      return returnArray;
+    }
+  };
+
   return {
     get root() {
       return root;
@@ -149,6 +202,9 @@ const BinarySearchTree = (array) => {
     depth,
     height,
     levelOrder,
+    inOrder,
+    preOrder,
+    postOrder,
   };
 };
 
@@ -159,3 +215,11 @@ const root = newTree.root;
 
 newTree.insert(100);
 const fifteen = newTree.find(5);
+
+const testCall = (node) => {
+  console.log(node.data);
+};
+
+newTree.prettyPrint(root);
+
+console.log(newTree.postOrder(testCall));

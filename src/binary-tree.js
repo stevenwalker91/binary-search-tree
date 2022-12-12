@@ -20,7 +20,7 @@ const BinarySearchTree = (array) => {
     return newNode;
   };
 
-  const root = buildTree(cleanedArray, 0, cleanedArray.length - 1);
+  let root = buildTree(cleanedArray, 0, cleanedArray.length - 1);
 
   // helper function to print to console visual representation of tree
   const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -191,6 +191,26 @@ const BinarySearchTree = (array) => {
     }
   };
 
+  const isBalanced = (node = root) => {
+    // base case
+    if (node === null) return true;
+
+    const leftHeight = height(root.left);
+    const rightHeight = height(root.right);
+
+    if (Math.abs(rightHeight - leftHeight) > 1) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const rebalance = () => {
+    const array = inOrder(null);
+    root = buildTree(array, 0, array.length - 1);
+    return root;
+  };
+
   return {
     get root() {
       return root;
@@ -205,21 +225,25 @@ const BinarySearchTree = (array) => {
     inOrder,
     preOrder,
     postOrder,
+    isBalanced,
+    rebalance,
   };
 };
 
 let arr = [6, 6, 5, 4, 3, 2, 1, 6, 15, 22, 13];
 
 const newTree = BinarySearchTree(arr);
-const root = newTree.root;
+let root = newTree.root;
 
 newTree.insert(100);
-const fifteen = newTree.find(5);
+newTree.insert(200);
+newTree.insert(300);
 
-const testCall = (node) => {
-  console.log(node.data);
-};
+const fifteen = newTree.find(5);
 
 newTree.prettyPrint(root);
 
-console.log(newTree.postOrder(testCall));
+newTree.rebalance();
+
+root = newTree.root;
+newTree.prettyPrint(root);

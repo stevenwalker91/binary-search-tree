@@ -16,7 +16,7 @@ const minValue = (root) => {
 };
 
 const createArray = (node, array) => {
-  array.push(node);
+  array.push(node.data);
   return array;
 };
 

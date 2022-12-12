@@ -12,9 +12,10 @@ The tree takes an array of values and will turn that array into a BST. Before pr
 
 ## Usage 
 
-1. Import into file `import * as bst from './binary-tree.js';`
-2. Create the array `const binaryTree = bst.BinarySearchTree(array);`
-3. Manipulate/search using methods below
+1. `npm install @woftis/binary-search-tree --save`
+2. Import into file `import * as bst from '@woftis/binary-search-tree';`
+3. Create the array `const binaryTree = bst.BinarySearchTree(array);`
+4. Manipulate/search using methods below
 
 
 ## Methods

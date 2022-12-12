@@ -119,6 +119,25 @@ const BinarySearchTree = (array) => {
     return Math.max(left + 1, right + 1);
   };
 
+  const levelOrder = (callbackFunction) => {
+    const queue = [root];
+    const output = [];
+
+    while (queue.length > 0) {
+      let node = queue.shift();
+
+      if (callbackFunction) callbackFunction(node);
+      output.push(node);
+
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+
+    if (!callbackFunction) {
+      return output;
+    }
+  };
+
   return {
     get root() {
       return root;
@@ -129,6 +148,7 @@ const BinarySearchTree = (array) => {
     deleteNode,
     depth,
     height,
+    levelOrder,
   };
 };
 
@@ -139,6 +159,3 @@ const root = newTree.root;
 
 newTree.insert(100);
 const fifteen = newTree.find(5);
-
-console.log(newTree.height(fifteen));
-console.log(newTree.prettyPrint(root));

@@ -23,7 +23,7 @@ const BinarySearchTree = (array) => {
   let root = buildTree(cleanedArray, 0, cleanedArray.length - 1);
 
   // helper function to print to console visual representation of tree
-  const prettyPrint = (node, prefix = '', isLeft = true) => {
+  const prettyPrint = (node = root, prefix = '', isLeft = true) => {
     if (node.right !== null) {
       prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
     }
@@ -132,7 +132,7 @@ const BinarySearchTree = (array) => {
       let node = queue.shift();
 
       if (callbackFunction) callbackFunction(node);
-      output.push(node);
+      output.push(node.data);
 
       if (node.left) queue.push(node.left);
       if (node.right) queue.push(node.right);
@@ -230,20 +230,4 @@ const BinarySearchTree = (array) => {
   };
 };
 
-let arr = [6, 6, 5, 4, 3, 2, 1, 6, 15, 22, 13];
-
-const newTree = BinarySearchTree(arr);
-let root = newTree.root;
-
-newTree.insert(100);
-newTree.insert(200);
-newTree.insert(300);
-
-const fifteen = newTree.find(5);
-
-newTree.prettyPrint(root);
-
-newTree.rebalance();
-
-root = newTree.root;
-newTree.prettyPrint(root);
+export { BinarySearchTree };
